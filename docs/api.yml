@@ -321,6 +321,72 @@ components:
         topicId:
           type: string
 
+  responses:
+    DefaultResponse:
+      description: Default Response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+              body:
+                type: object
+
+    Response200:
+      description: 200 Response
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/responses/DefaultResponse"
+              - type: object
+                properties:
+                  data:
+                    type: object 
+
+    Response400:
+      description: 400 Response
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/responses/DefaultResponse"
+              - type: object
+                properties:
+                  errors:
+                    type: array 
+
+    Response403:
+      description: 403 Response
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/responses/DefaultResponse"
+              - type: object
+                properties:
+                  reason:
+                    type: string 
+
+    Response500:
+      description: 500 Response
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/responses/DefaultResponse"
+              - type: object
+                properties:
+                  error:
+                    type: string
+
   parameters:
     queryPagination:
       in: query
