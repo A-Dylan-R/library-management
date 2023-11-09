@@ -17,6 +17,7 @@ paths:
         - $ref: "#/components/parameters/pathPagination"
       responses:
         200:
+          $ref: "#/components/responses/Response200"
           description: The list of filtered books
           content:
             application/json:
@@ -35,6 +36,7 @@ paths:
         - $ref: "#/components/parameters/queryPagination"
       responses:
         200:
+          $ref: "#/components/responses/Response200"
           description: The list of filtered books
           content:
             application/json:
@@ -53,6 +55,7 @@ paths:
         - $ref: "#/components/parameters/pathPagination"
       responses:
         200:
+          $ref: "#/components/responses/Response200"
           description: The author's list
   /authors:
     get:
@@ -65,6 +68,7 @@ paths:
         - $ref: "#/components/parameters/queryPagination"
       responses:
         200:
+          $ref: "#/components/responses/Response200"
           description: The author's list
     put:
       tags:
@@ -85,6 +89,7 @@ paths:
               $ref: "#/components/schemas/Author"
       responses:
         200:
+          $ref: "#/components/responses/Response200"
           description: Author updated successfully
     delete:
       tags:
@@ -99,6 +104,7 @@ paths:
             type: string
       responses:
         204:
+          $ref: "#/components/responses/Response204"
           description: Author deleted successfully
   /books/{bookId}/authors/{authorId}:
     put:
@@ -117,6 +123,7 @@ paths:
             type: string
       responses:
         200:
+          $ref: "#/components/responses/Response200"
           description: The updated book
           content:
             application/json:
@@ -138,6 +145,7 @@ paths:
                 $ref: "#/components/schemas/UpdateBookAuthor"
       responses:
         200:
+          $ref: "#/components/responses/Response200"
           description: Authors updated successfully
   /topics:
     get:
@@ -147,6 +155,7 @@ paths:
       description: Retrieve a list of all topics
       responses:
         200:
+          $ref: "#/components/responses/Response200"
           description: List of topics
     put:
       tags:
@@ -161,6 +170,7 @@ paths:
               $ref: "#/components/schemas/Topic"
       responses:
         200:
+          $ref: "#/components/responses/Response200"
           description: Topic created or updated successfully
     delete:
       tags:
@@ -175,6 +185,8 @@ paths:
             type: string
       responses:
         204:
+          
+          $ref: "#/components/responses/Response204"
           description: Topic deleted successfully
   /books/{bookId}/topics/{topicId}:
     put:
@@ -195,6 +207,7 @@ paths:
             type: string
       responses:
         200:
+          $ref: "#/components/responses/Response200"
           description: The updated book with the new topic
           content:
             application/json:
@@ -216,6 +229,7 @@ paths:
                 $ref: "#/components/schemas/UpdateBookTopic"
       responses:
         200:
+          $ref: "#/components/responses/Response200"
           description: Topics updated successfully
   /topic:
     get:
@@ -240,6 +254,7 @@ paths:
             default: 50
       responses:
         200:
+          $ref: "#/components/responses/Response200"
           description: List of topics
   /authors/topics:
     get:
@@ -249,6 +264,7 @@ paths:
       description: Retrieve topics for all authors
       responses:
         200:
+          $ref: "#/components/responses/Response200"
           description: List of objects containing authorName, authorId, and topicName
           content:
             application/json:
@@ -324,7 +340,7 @@ components:
           type: string
   responses:
     defaultResponse:
-      description: Default response structure
+      description: Response structure
       content:
         application/json:
           schema:
@@ -341,16 +357,19 @@ components:
                 type: object
     Response200:
       $ref: "#/components/responses/defaultResponse"
-      description: Response for HTTP 200 (OK)
+      description: HTTP 200 (OK)
     Response400:
       $ref: "#/components/responses/defaultResponse"
-      description: Response for HTTP 400 (Bad Request)
+      description: HTTP 400 (Bad Request)
     Response403:
       $ref: "#/components/responses/defaultResponse"
-      description: Response for HTTP 403 (Forbidden)
+      description: HTTP 403 (Forbidden)
     Response500:
       $ref: "#/components/responses/defaultResponse"
-      description: Response for HTTP 500 (Internal Server Error)
+      description: HTTP 500 (Internal Server Error)
+    Response204:
+      $ref: "#/components/responses/defaultResponse"
+      description: HTTP 204 (No Content)
 
   parameters:
     queryPagination:
