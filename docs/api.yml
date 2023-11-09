@@ -6,7 +6,7 @@ info:
 servers:
   - url: https://library.com
 paths:
-  /books:
+  /books/{page}:
     get:
       tags:
         - "Books"
@@ -14,7 +14,6 @@ paths:
       description: The returned books are ordered by updated datetime.
       operationId: getBooks
       parameters:
-        - $ref: "#/components/parameters/queryPagination"
         - $ref: "#/components/parameters/pathPagination"
       responses:
         200:
@@ -25,6 +24,36 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Book"
+  /books:
+    get:
+      tags:
+        - "Books"
+      summary: Get all books
+      description: The returned books are ordered by updated datetime.
+      operationId: getBooks
+      parameters:
+        - $ref: "#/components/parameters/queryPagination"
+      responses:
+        200:
+          description: The list of filtered books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Book"
+  /authors/{page}:
+    get:
+      tags:
+        - "Authors"
+      summary: Get all authors
+      description: Get all the authors in the database
+      operationId: Get Authors
+      parameters:
+        - $ref: "#/components/parameters/pathPagination"
+      responses:
+        200:
+          description: The author's list
   /authors:
     get:
       tags:
@@ -34,7 +63,6 @@ paths:
       operationId: Get Authors
       parameters:
         - $ref: "#/components/parameters/queryPagination"
-        - $ref: "#/components/parameters/pathPagination"
       responses:
         200:
           description: The author's list
