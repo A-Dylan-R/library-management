@@ -68,10 +68,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/BookImport"
+              $ref: "#/components/schemas/Book"
           application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
             schema:
-              $ref: "#/components/schemas/ExcelBookImport"
+              $ref: "#/components/schemas/Book"
       responses:
         200:
           $ref: "#/components/responses/Response200"
@@ -135,10 +135,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AuthorImport"
+              $ref: "#/components/schemas/Author"
           application/vnd.openxmlformats-officedocument.spreadsheetml.sheet: # MIME type for Excel
             schema:
-              $ref: "#/components/schemas/ExcelAuthorImport"
+              $ref: "#/components/schemas/Author"
       responses:
         200:
           $ref: "#/components/responses/Response200"
@@ -209,10 +209,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/BookImport"
+              $ref: "#/components/schemas/UpdateBookAuthor"
           application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
             schema:
-              $ref: "#/components/schemas/ExcelBookImport"
+              $ref: "#/components/schemas/UpdateBookAuthor"
       responses:
         200:
           $ref: "#/components/responses/Response200"
@@ -324,6 +324,7 @@ components:
         releaseDate:
           type: string
           format: date
+
     UpdateBookAuthor:
       type: object
       properties:
@@ -331,6 +332,7 @@ components:
           type: string
         authorId:
           type: string
+
     AuthorImport:
       oneOf:
         - $ref: "#/components/schemas/ExcelAuthorImport"
