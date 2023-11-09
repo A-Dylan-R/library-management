@@ -104,11 +104,15 @@ paths:
           schema:
             type: string
       requestBody:
+        description: Import authors in either Excel or JSON format
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Author"
+              $ref: "#/components/schemas/AuthorImport"
+          application/vnd.openxmlformats-officedocument.spreadsheetml.sheet: # MIME type for Excel
+            schema:
+              $ref: "#/components/schemas/ExcelAuthorImport"
       responses:
         200:
           $ref: "#/components/responses/Response200"
@@ -174,184 +178,18 @@ paths:
       summary: Update Book authors
       description: Update the authors of multiple books
       requestBody:
+        description: Import books in either Excel or JSON format
         required: true
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: "#/components/schemas/UpdateBookAuthor"
-      responses:
-        200:
-          $ref: "#/components/responses/Response200"
-        400:
-          $ref: "#/components/responses/Response400"
-        403:
-          $ref: "#/components/responses/Response403"
-        500:
-          $ref: "#/components/responses/Response500"
-  /topics:
-    get:
-      tags:
-        - "Topics"
-      summary: Get all topics
-      description: Retrieve a list of all topics
-      responses:
-        200:
-          $ref: "#/components/responses/Response200"
-        400:
-          $ref: "#/components/responses/Response400"
-        403:
-          $ref: "#/components/responses/Response403"
-        500:
-          $ref: "#/components/responses/Response500"
-    put:
-      tags:
-        - "Topics"
-      summary: Create or update a topic
-      description: Create or update a topic
-      requestBody:
-        required: true
-        content:
-          application/json:
+              $ref: "#/components/schemas/BookImport"
+          application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
             schema:
-              $ref: "#/components/schemas/Topic"
+              $ref: "#/components/schemas/ExcelBookImport"
       responses:
         200:
           $ref: "#/components/responses/Response200"
-        400:
-          $ref: "#/components/responses/Response400"
-        403:
-          $ref: "#/components/responses/Response403"
-        500:
-          $ref: "#/components/responses/Response500"
-    delete:
-      tags:
-        - "Topics"
-      summary: Delete a topic by ID
-      description: Delete a topic by ID
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          $ref: "#/components/responses/Response200"
-        400:
-          $ref: "#/components/responses/Response400"
-        403:
-          $ref: "#/components/responses/Response403"
-        500:
-          $ref: "#/components/responses/Response500"
-  /books/{bookId}/topics/{topicId}:
-    put:
-      tags:
-        - "Topics"
-      summary: Update the topic of a book
-      description: Update the topic of a book by book ID and topic ID
-      parameters:
-        - name: bookId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: topicId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          $ref: "#/components/responses/Response200"
-          description: The updated book with the new topic
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Book"
-        400:
-          $ref: "#/components/responses/Response400"
-        403:
-          $ref: "#/components/responses/Response403"
-        500:
-          $ref: "#/components/responses/Response500"
-  /books/topics:
-    put:
-      tags:
-        - "Topics"
-      summary: Update topics for multiple books
-      description: Update the topics of multiple books
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: "#/components/schemas/UpdateBookTopic"
-      responses:
-        200:
-          $ref: "#/components/responses/Response200"
-        400:
-          $ref: "#/components/responses/Response400"
-        403:
-          $ref: "#/components/responses/Response403"
-        500:
-          $ref: "#/components/responses/Response500"
-  /topic:
-    get:
-      tags:
-        - "Topics"
-      summary: Get all topics with pagination
-      description: Retrieve a list of all topics with pagination
-      parameters:
-        - in: query
-          name: page
-          description: Page number for pagination
-          required: false
-          schema:
-            type: integer
-            default: 1
-        - in: query
-          name: pageSize
-          description: Page size for pagination
-          required: false
-          schema:
-            type: integer
-            default: 50
-      responses:
-        200:
-          $ref: "#/components/responses/Response200"
-        400:
-          $ref: "#/components/responses/Response400"
-        403:
-          $ref: "#/components/responses/Response403"
-        500:
-          $ref: "#/components/responses/Response500"
-  /authors/topics:
-    get:
-      tags:
-        - "Topics"
-      summary: Get topics for all authors
-      description: Retrieve topics for all authors
-      responses:
-        200:
-          $ref: "#/components/responses/Response200"
-          description: List of objects containing authorName, authorId, and topicName
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    authorName:
-                      type: string
-                    authorId:
-                      type: string
-                    topicName:
-                      type: string
         400:
           $ref: "#/components/responses/Response400"
         403:
@@ -366,13 +204,15 @@ paths:
       description: Import a list of books
       operationId: importBooks
       requestBody:
+        description: Import books in either Excel or JSON format
         required: true
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: "#/components/schemas/BookImport"
+              $ref: "#/components/schemas/BookImport"
+          application/vnd.openxmlformats-officedocument.spreadsheetml.sheet: # MIME type for Excel
+            schema:
+              $ref: "#/components/schemas/ExcelBookImport"
       responses:
         200:
           description: List of imported books
@@ -388,7 +228,6 @@ paths:
           $ref: "#/components/responses/Response403"
         500:
           $ref: "#/components/responses/Response500"
-
   /authors/import:
     post:
       tags:
@@ -397,13 +236,15 @@ paths:
       description: Import a list of authors
       operationId: importAuthors
       requestBody:
+        description: Import authors in either Excel or JSON format
         required: true
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: "#/components/schemas/AuthorImport"
+              $ref: "#/components/schemas/AuthorImport"
+          application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+            schema:
+              $ref: "#/components/schemas/ExcelAuthorImport"
       responses:
         200:
           description: List of imported authors
@@ -419,7 +260,6 @@ paths:
           $ref: "#/components/responses/Response403"
         500:
           $ref: "#/components/responses/Response500"
-
 components:
   schemas:
     Book:
@@ -465,49 +305,60 @@ components:
           type: string
         authorId:
           type: string
-    Topic:
-      type: object
-      properties:
-        topicId:
-          type: string
-        topicName:
-          type: string
-    UpdateBookTopic:
-      type: object
-      properties:
-        bookId:
-          type: string
-        topicId:
-          type: string
-
     AuthorImport:
+      oneOf:
+        - $ref: "#/components/schemas/ExcelAuthorImport"
+        - $ref: "#/components/schemas/JSONAuthorImport"
+
+    ExcelAuthorImport:
       type: object
       properties:
-        authorName:
+        excelFile:
           type: string
-        sex:
-          enum:
-            - M
-            - F
+          format: binary
+
+    JSONAuthorImport:
+      type: array
+      items:
+        type: object
+        properties:
+          authorName:
+            type: string
+          sex:
+            type: string
 
     BookImport:
+      oneOf:
+        - $ref: "#/components/schemas/ExcelBookImport"
+        - $ref: "#/components/schemas/JSONBookImport"
+
+    ExcelBookImport:
       type: object
       properties:
-        bookName:
+        excelFile:
           type: string
-        author:
-          $ref: "#/components/schemas/AuthorImport"
-        pageNumbers:
-          type: string
-        topic:
-          type: string
-          enum:
-            - ROMANCE
-            - COMEDY
-            - OTHER
-        releaseDate:
-          type: string
-          format: date
+          format: binary
+
+    JSONBookImport:
+      type: array
+      items:
+        type: object
+        properties:
+          bookName:
+            type: string
+          author:
+            $ref: "#/components/schemas/AuthorImport"
+          pageNumbers:
+            type: string
+          topic:
+            type: string
+            enum:
+              - ROMANCE
+              - COMEDY
+              - OTHER
+          releaseDate:
+            type: string
+            format: date
 
     defaultResponse:
       type: object
