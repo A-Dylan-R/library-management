@@ -339,21 +339,10 @@ components:
         - $ref: "#/components/schemas/JSONAuthorImport"
 
     ExcelAuthorImport:
-      type: object
-      properties:
-        excelFile:
-          type: string
-          format: binary
+      $ref: "#/components/schemas/Author"
 
     JSONAuthorImport:
-      type: array
-      items:
-        type: object
-        properties:
-          authorName:
-            type: string
-          sex:
-            type: string
+      $ref: "#/components/schemas/Author"
 
     BookImport:
       oneOf:
@@ -361,32 +350,10 @@ components:
         - $ref: "#/components/schemas/JSONBookImport"
 
     ExcelBookImport:
-      type: object
-      properties:
-        excelFile:
-          type: string
-          format: binary
+      $ref: "#/components/schemas/Book"
 
     JSONBookImport:
-      type: array
-      items:
-        type: object
-        properties:
-          bookName:
-            type: string
-          author:
-            $ref: "#/components/schemas/AuthorImport"
-          pageNumbers:
-            type: string
-          topic:
-            type: string
-            enum:
-              - ROMANCE
-              - COMEDY
-              - OTHER
-          releaseDate:
-            type: string
-            format: date
+      $ref: "#/components/schemas/Book"
 
     defaultResponse:
       type: object
