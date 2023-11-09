@@ -56,6 +56,32 @@ paths:
           $ref: "#/components/responses/Response403"
         500:
           $ref: "#/components/responses/Response500"
+
+    put:
+      tags:
+        - "Books"
+      summary: Update multiple books
+      description: Update information for multiple books
+      requestBody:
+        description: Import books in either Excel or JSON format
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BookImport"
+          application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+            schema:
+              $ref: "#/components/schemas/ExcelBookImport"
+      responses:
+        200:
+          $ref: "#/components/responses/Response200"
+        400:
+          $ref: "#/components/responses/Response400"
+        403:
+          $ref: "#/components/responses/Response403"
+        500:
+          $ref: "#/components/responses/Response500"
+
   /authors/{page}:
     get:
       tags:
@@ -210,7 +236,7 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/BookImport"
-          application/vnd.openxmlformats-officedocument.spreadsheetml.sheet: # MIME type for Excel
+          application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
             schema:
               $ref: "#/components/schemas/ExcelBookImport"
       responses:
