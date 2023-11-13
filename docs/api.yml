@@ -314,20 +314,65 @@ paths:
         500:
           $ref: "#/components/responses/Response500"
 
+  /books/borrowed:
+    get:
+      tags:
+        - "Books"
+      summary: Get borrowed books
+      description: Get the list of books currently borrowed
+      responses:
+        200:
+          description: The list of borrowed books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Book"
+        400:
+          $ref: "#/components/responses/Response400"
+        403:
+          $ref: "#/components/responses/Response403"
+        500:
+          $ref: "#/components/responses/Response500"
+
+  /books/available:
+    get:
+      tags:
+        - "Books"
+      summary: Get available books
+      description: Get the list of books currently available for borrowing
+      responses:
+        200:
+          description: The list of available books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Book"
+        400:
+          $ref: "#/components/responses/Response400"
+        403:
+          $ref: "#/components/responses/Response403"
+        500:
+          $ref: "#/components/responses/Response500"
+
 components:
   schemas:
     Book:
       allOf:
         - $ref: "#/components/schemas/CrupdateBook"
         - type: object
-      properties:
-        author:
-          $ref: "#/components/schemas/Author"
-        status:
-          type: string
-          enum:
-            - AVAILABLE
-            - BORROWED
+          properties:
+            author:
+              $ref: "#/components/schemas/Author"
+            status:
+              type: string
+              enum:
+                - AVAILABLE
+                - BORROWED
+
     Author:
       type: object
       properties:
@@ -409,6 +454,35 @@ components:
           type: string
         reference:
           type: string
+        activities:
+          type: array
+          items:
+            type: object
+            properties:
+              activityType:
+                type: string
+                enum:
+                  - BORROW
+                  - RETURN
+              bookId:
+                type: string
+              date:
+                type: string
+                format: date-time
+
+    VisitorActivity:
+      type: object
+      properties:
+        activityType:
+          type: string
+          enum:
+            - BORROW
+            - RETURN
+        bookId:
+          type: string
+        date:
+          type: string
+          format: date-time
 
     Loan:
       type: object
@@ -416,8 +490,6 @@ components:
         loanId:
           type: string
         bookId:
-          type: string
-        visitorId:
           type: string
         loanDate:
           type: string
