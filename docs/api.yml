@@ -360,6 +360,19 @@ components:
         reference:
           type: string
 
+    Loan:
+      type: object
+      properties:
+        loanId:
+          type: string
+        bookId:
+          type: string
+        visitorId:
+          type: string
+        loanDate:
+          type: string
+          format: date-time
+
   responses:
     Response200:
       description: HTTP 200 (OK)
