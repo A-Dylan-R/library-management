@@ -269,15 +269,65 @@ paths:
           $ref: "#/components/responses/Response403"
         500:
           $ref: "#/components/responses/Response500"
+
+  /loans:
+    post:
+      tags:
+        - "Loans"
+      summary: Borrow a book
+      description: Record a book loan by a visitor
+      requestBody:
+        description: Loan details
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Loan"
+      responses:
+        200:
+          $ref: "#/components/responses/Response200"
+        400:
+          $ref: "#/components/responses/Response400"
+        403:
+          $ref: "#/components/responses/Response403"
+        500:
+          $ref: "#/components/responses/Response500"
+    put:
+      tags:
+        - "Loans"
+      summary: Return a book
+      description: Record the return of a borrowed book by a visitor
+      requestBody:
+        description: Return details
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Loan"
+      responses:
+        200:
+          $ref: "#/components/responses/Response200"
+        400:
+          $ref: "#/components/responses/Response400"
+        403:
+          $ref: "#/components/responses/Response403"
+        500:
+          $ref: "#/components/responses/Response500"
+
 components:
   schemas:
     Book:
       allOf:
         - $ref: "#/components/schemas/CrupdateBook"
         - type: object
-          properties:
-            author:
-              $ref: "#/components/schemas/Author"
+      properties:
+        author:
+          $ref: "#/components/schemas/Author"
+        status:
+          type: string
+          enum:
+            - AVAILABLE
+            - BORROWED
     Author:
       type: object
       properties:
