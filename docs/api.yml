@@ -324,6 +324,33 @@ paths:
         500:
           $ref: "#/components/responses/Response500"
 
+  /loans/{loanId}:
+    get:
+      tags:
+        - "Loans"
+      summary: Get loan details by ID
+      description: Get details about a specific loan
+      operationId: getLoanById
+      parameters:
+        - name: loanId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: The loan details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Loan"
+        400:
+          $ref: "#/components/responses/Response400"
+        403:
+          $ref: "#/components/responses/Response403"
+        500:
+          $ref: "#/components/responses/Response500"
+
   /books/borrowed:
     get:
       tags:
@@ -365,6 +392,56 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Book"
+        400:
+          $ref: "#/components/responses/Response400"
+        403:
+          $ref: "#/components/responses/Response403"
+        500:
+          $ref: "#/components/responses/Response500"
+
+  /visitors:
+    get:
+      tags:
+        - "Visitors"
+      summary: Get all visitors
+      description: Get a list of all visitors
+      operationId: getVisitors
+      responses:
+        200:
+          description: The list of visitors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Visitor"
+        400:
+          $ref: "#/components/responses/Response400"
+        403:
+          $ref: "#/components/responses/Response403"
+        500:
+          $ref: "#/components/responses/Response500"
+
+  /visitors/{visitorId}:
+    get:
+      tags:
+        - "Visitors"
+      summary: Get visitor by ID
+      description: Get information about a specific visitor
+      operationId: getVisitorById
+      parameters:
+        - name: visitorId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: The visitor details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Visitor"
         400:
           $ref: "#/components/responses/Response400"
         403:
