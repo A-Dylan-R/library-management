@@ -80,10 +80,16 @@ paths:
     get:
       tags:
         - "Authors"
-      summary: Get all authors
-      description: Get all the authors in the database
-      operationId: Get Authors
+      summary: Get authors
+      description: The returned authors filtered by name.
+      operationId: getAuthors
       parameters:
+        - in: query
+          name: authorName
+          description: Filter authors by name
+          required: false
+          schema:
+            type: string
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/pageSize"
       responses:
@@ -401,6 +407,18 @@ paths:
           $ref: "#/components/responses/Response500"
 
 components:
+  securitySchemes:
+    oAuthLibrary:
+      type: oauth2
+      description: Cette API utilise OAuth 2.0 pour gérer les autorisations.
+      flows:
+        implicit:
+          authorizationUrl: https://api.library.com/oauth2/authorize
+          scopes:
+            borrow: borrowing books
+            return: returning books
+            add_author: adding authors
+            add_book: adding books
   schemas:
     Book:
       allOf:
