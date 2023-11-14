@@ -1,10 +1,12 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.2.0
+  version: 2.0.0
   description: STD22119
 servers:
   - url: https://library.com
+security:
+  - OAuth2: [read] # Par défaut, l'accès public
 paths:
   /books:
     get:
@@ -80,16 +82,10 @@ paths:
     get:
       tags:
         - "Authors"
-      summary: Get authors
-      description: The returned authors filtered by name.
-      operationId: getAuthors
+      summary: Get all authors
+      description: Get all the authors in the database
+      operationId: Get Authors
       parameters:
-        - in: query
-          name: authorName
-          description: Filter authors by name
-          required: false
-          schema:
-            type: string
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/pageSize"
       responses:
@@ -218,6 +214,8 @@ paths:
       summary: Import books
       description: Import a list of books
       operationId: importBooks
+      security:
+        - OAuth2: [write]
       requestBody:
         description: Import books in either Excel or JSON format
         required: true
@@ -249,6 +247,8 @@ paths:
         - "Authors"
       summary: Import authors
       description: Import a list of authors
+      security:
+        - OAuth2: [write]
       operationId: importAuthors
       requestBody:
         description: Import authors in either Excel or JSON format
@@ -282,6 +282,8 @@ paths:
         - "Loans"
       summary: Borrow a book
       description: Record a book loan by a visitor
+      security:
+        - OAuth2: [write]
       requestBody:
         description: Loan details
         required: true
@@ -303,6 +305,8 @@ paths:
         - "Loans"
       summary: Return a book
       description: Record the return of a borrowed book by a visitor
+      security:
+        - OAuth2: [write]
       requestBody:
         description: Return details
         required: true
@@ -326,6 +330,8 @@ paths:
         - "Books"
       summary: Get borrowed books
       description: Get the list of books currently borrowed
+      security:
+        - OAuth2: [write]
       responses:
         200:
           description: The list of borrowed books
@@ -348,6 +354,8 @@ paths:
         - "Books"
       summary: Get available books
       description: Get the list of books currently available for borrowing
+      security:
+        - OAuth2: [read]
       responses:
         200:
           description: The list of available books
@@ -370,6 +378,8 @@ paths:
         - "Visitors"
       summary: Get visitor activities
       description: Get the list of activities performed by a visitor within a specified period
+      security:
+        - OAuth2: [read]
       parameters:
         - name: visitorId
           in: path
@@ -408,17 +418,15 @@ paths:
 
 components:
   securitySchemes:
-    oAuthLibrary:
+    OAuth2:
       type: oauth2
-      description: Cette API utilise OAuth 2.0 pour gérer les autorisations.
       flows:
         implicit:
-          authorizationUrl: https://api.library.com/oauth2/authorize
+          authorizationUrl: https://auth-server.com/oauth/authorize
           scopes:
-            borrow: borrowing books
-            return: returning books
-            add_author: adding authors
-            add_book: adding books
+            read: Grants read access # public
+            write: Grants write access # admin
+
   schemas:
     Book:
       allOf:
